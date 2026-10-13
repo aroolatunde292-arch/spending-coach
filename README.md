@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spending Coach
+
+**A personal budgeting application that helps users plan expenses, track spending, and understand how much money is safe to spend.**
+
+Spending Coach is a personal software development project built around a practical financial challenge: money can run out sooner than expected when spending decisions are made without a clear plan.
+
+The application helps users create a budget based on their available funds, expected expenses, and next income date. It also tracks actual spending against planned amounts and calculates an estimated safe-to-spend balance.
+
+## The Problem
+
+Traditional budgeting approaches can feel unrealistic when expenses happen in batches rather than evenly every day. Food shopping, transportation, mobile data, and unexpected costs can compete for the same limited funds.
+
+Spending Coach takes a practical approach by allowing users to plan around their actual spending patterns and reserve money for unexpected expenses.
+
+## Features
+
+* **Four-step budget setup:** Enter available funds, the next income date, expense categories, and expected costs.
+* **Flexible expense planning:** Budget for groceries, prepared food, transport, mobile data, bills, health, education, family support, and entertainment.
+* **Spending tracker:** Record, edit, and delete spending transactions.
+* **Safe-to-spend calculation:** Estimate available discretionary money after accounting for recorded spending, remaining planned expenses, and a protected buffer.
+* **Category-level progress:** Compare planned spending, amounts paid, and remaining budgets.
+* **Protected emergency buffer:** Set aside funds for unexpected expenses.
+
+## Technology Stack
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Install Node.js and npm.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   git clone https://github.com/aroolatunde292-arch/spending-coach.git
+   ```
 
-## Learn More
+2. Navigate to the project directory:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   cd spending-coach
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Install the dependencies:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+4. Start the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Open http://localhost:3000 in your browser.
+
+## Current Status
+
+Spending Coach is an ongoing personal project. The current implementation includes budget setup, expense planning, transaction management, category-level progress, and safe-to-spend calculations.
+
+**Current limitation:** Budget data is managed in application state and is not yet saved to a persistent database. Saving budgets across page reloads and sessions is a potential future improvement.
+
+## Future Improvements
+
+* Persist budgets and transactions between sessions.
+* Improve validation and test budget calculations across different scenarios.
+* Refine the user experience and responsive design.
+* Add more detailed financial summaries and insights.
+* Deploy a live demo for portfolio visitors.
+
+## Author
+
+**Olatunde Aro**
+
+GitHub: [@aroolatunde292-arch](https://github.com/aroolatunde292-arch)
