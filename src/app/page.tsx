@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const expenseOptions = [
   "Food",
@@ -45,7 +45,7 @@ const [spendingAmount, setSpendingAmount] = useState("");
   const [otherAmounts, setOtherAmounts] = useState<Record<string, string>>(
     {}
   );
-
+const [hasLoaded, setHasLoaded] = useState(false);
   function toggleExpense(expense: string) {
     setExpenses((current) =>
       current.includes(expense)
@@ -61,6 +61,123 @@ const [spendingAmount, setSpendingAmount] = useState("");
     }));
   }
 
+useEffect(() => {
+  try {
+    const savedData = localStorage.getItem("spending-coach-data");
+
+    if (savedData) {
+      const data = JSON.parse(savedData);
+
+      if (data && typeof data === "object") {
+        if (typeof data.step === "number" && data.step >= 0 && data.step <= 3) {
+          setStep(data.step);
+        }
+
+        if (typeof data.money === "string") setMoney(data.money);
+        if (typeof data.nextIncome === "string") setNextIncome(data.nextIncome);
+
+        if (
+          Array.isArray(data.expenses) &&
+          data.expenses.every((item: unknown) => typeof item === "string")
+        ) {
+          setExpenses(data.expenses);
+        }
+
+        if (
+          ["groceries", "prepared", "both", ""].includes(data.foodPattern)
+        ) {
+          setFoodPattern(data.foodPattern);
+        }
+
+        if (typeof data.foodAmount === "string") setFoodAmount(data.foodAmount);
+        if (typeof data.transportTrips === "string") setTransportTrips(data.transportTrips);
+        if (typeof data.transportCost === "string") setTransportCost(data.transportCost);
+        if (typeof data.dataPurchaseAmount === "string") setDataPurchaseAmount(data.dataPurchaseAmount);
+        if (typeof data.dataPurchases === "string") setDataPurchases(data.dataPurchases);
+        if (typeof data.buffer === "string") setBuffer(data.buffer);
+
+        if (
+          Array.isArray(data.transactions) &&
+          data.transactions.every(
+            (item: unknown) =>
+              typeof item === "object" &&
+              item !== null &&
+              "id" in item &&
+              typeof item.id === "number" &&
+              "category" in item &&
+              typeof item.category === "string" &&
+              "amount" in item &&
+              typeof item.amount === "number"
+          )
+        ) {
+          setTransactions(data.transactions);
+        }
+
+        if (
+          data.otherAmounts &&
+          typeof data.otherAmounts === "object" &&
+          !Array.isArray(data.otherAmounts)
+        ) {
+          setOtherAmounts(data.otherAmounts);
+        }
+
+        if (typeof data.spendingCategory === "string") {
+          setSpendingCategory(data.spendingCategory);
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Could not load saved Spending Coach data:", error);
+  } finally {
+    setHasLoaded(true);
+  }
+}, []);
+
+useEffect(() => {
+  if (!hasLoaded) return;
+
+  const dataToSave = {
+    step,
+    money,
+    nextIncome,
+    expenses,
+    foodPattern,
+    foodAmount,
+    transportTrips,
+    transportCost,
+    dataPurchaseAmount,
+    dataPurchases,
+    buffer,
+    transactions,
+    otherAmounts,
+    spendingCategory,
+  };
+
+  try {
+    localStorage.setItem(
+      "spending-coach-data",
+      JSON.stringify(dataToSave)
+    );
+  } catch (error) {
+    console.error("Could not save Spending Coach data:", error);
+  }
+}, [
+  hasLoaded,
+  step,
+  money,
+  nextIncome,
+  expenses,
+  foodPattern,
+  foodAmount,
+  transportTrips,
+  transportCost,
+  dataPurchaseAmount,
+  dataPurchases,
+  buffer,
+  transactions,
+  otherAmounts,
+  spendingCategory,
+]);
   function calculatePlan() {
     let total = 0;
 
