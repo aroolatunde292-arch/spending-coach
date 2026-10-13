@@ -15,6 +15,23 @@ const expenseOptions = [
 
 type FoodPattern = "groceries" | "prepared" | "both" | "";
 
+type ArchivedBudget = {
+  id: number;
+  archivedAt: string;
+  money: string;
+  nextIncome: string;
+  expenses: string[];
+  foodPattern: FoodPattern;
+  foodAmount: string;
+  transportTrips: string;
+  transportCost: string;
+  dataPurchaseAmount: string;
+  dataPurchases: string;
+  buffer: string;
+  transactions: { id: number; category: string; amount: number }[];
+  otherAmounts: Record<string, string>;
+  spendingCategory: string;
+};
 export default function Home() {
   const [step, setStep] = useState(0);
 
@@ -38,6 +55,7 @@ export default function Home() {
   const [transactions, setTransactions] = useState<
   { id: number; category: string; amount: number }[]
 >([]);
+const [archivedBudgets, setArchivedBudgets] = useState<ArchivedBudget[]>([]);
 const [editingTransactionId, setEditingTransactionId] = useState<number | null>(null);
 const [spendingCategory, setSpendingCategory] = useState("Food");
 const [spendingAmount, setSpendingAmount] = useState("");
@@ -61,6 +79,55 @@ const [hasLoaded, setHasLoaded] = useState(false);
     }));
   }
 
+function startNewBudget() {
+  if (!money.trim() && transactions.length === 0) {
+    window.alert("There is no current budget to archive yet.");
+    return;
+  }
+
+  const confirmed = window.confirm(
+    "Start a new budget period? Your current budget and transactions will be archived, and the new budget will start fresh."
+  );
+
+  if (!confirmed) return;
+
+  const archivedBudget: ArchivedBudget = {
+    id: Date.now(),
+    archivedAt: new Date().toISOString(),
+    money,
+    nextIncome,
+    expenses,
+    foodPattern,
+    foodAmount,
+    transportTrips,
+    transportCost,
+    dataPurchaseAmount,
+    dataPurchases,
+    buffer,
+    transactions,
+    otherAmounts,
+    spendingCategory,
+  };
+
+  setArchivedBudgets((current) => [archivedBudget, ...current]);
+
+  setMoney("");
+  setNextIncome("");
+  setExpenses([]);
+  setFoodPattern("");
+  setFoodAmount("");
+  setTransportTrips("");
+  setTransportCost("");
+  setDataPurchaseAmount("");
+  setDataPurchases("");
+  setBuffer("");
+  setTransactions([]);
+  setOtherAmounts({});
+  setSpendingCategory("Food");
+  setSpendingAmount("");
+  setEditingTransactionId(null);
+  setStep(0);
+}
 useEffect(() => {
   try {
     const savedData = localStorage.getItem("spending-coach-data");
@@ -112,7 +179,9 @@ useEffect(() => {
         ) {
           setTransactions(data.transactions);
         }
-
+if (Array.isArray(data.archivedBudgets)) {
+  setArchivedBudgets(data.archivedBudgets);
+}
         if (
           data.otherAmounts &&
           typeof data.otherAmounts === "object" &&
@@ -149,6 +218,7 @@ useEffect(() => {
     dataPurchases,
     buffer,
     transactions,
+    archivedBudgets,
     otherAmounts,
     spendingCategory,
   };
@@ -163,6 +233,7 @@ useEffect(() => {
   }
 }, [
   hasLoaded,
+  archivedBudgets,
   step,
   money,
   nextIncome,
@@ -368,6 +439,67 @@ const shortfall = Math.max(0, -safeToSpend);
               Tell us how much money you have and how long it needs to last.
             </p>
 
+            {archivedBudgets.length > 0 && (
+              <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
+                <h2 className="text-xl font-bold">
+                  Previous Budget Periods
+                </h2>
+
+                <p className="mt-2 text-sm text-slate-500">
+                  Review your previous budgets and recorded spending.
+                </p>
+
+                <div className="mt-5 space-y-4">
+                  {archivedBudgets.map((budget) => (
+                    <div
+                      key={budget.id}
+                      className="rounded-xl border border-slate-200 p-4"
+                    >
+                      <p className="font-semibold">
+                        Archived on{" "}
+                        {new Date(budget.archivedAt).toLocaleDateString()}
+                      </p>
+
+                      <p className="mt-2 text-sm text-slate-600">
+                        Starting money: ₦
+                        {Number(budget.money || 0).toLocaleString()}
+                      </p>
+
+                      <p className="text-sm text-slate-600">
+                        Total recorded spending: ₦
+                        {budget.transactions
+                          .reduce(
+                            (total, transaction) =>
+                              total + transaction.amount,
+                            0
+                          )
+                          .toLocaleString()}
+                      </p>
+
+                      <p className="text-sm text-slate-600">
+                        Transactions: {budget.transactions.length}
+                      </p>
+
+                      {budget.transactions.length > 0 && (
+                        <div className="mt-3 border-t border-slate-100 pt-3">
+                          {budget.transactions.map((transaction) => (
+                            <div
+                              key={transaction.id}
+                              className="flex justify-between gap-4 py-1 text-sm"
+                            >
+                              <span>{transaction.category}</span>
+                              <span>
+                                ₦{transaction.amount.toLocaleString()}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
             <div className="mt-10 space-y-8">
               <div>
                 <label
@@ -841,7 +973,72 @@ return (
         </p>
       </div>
 
+      <button
+        onClick={startNewBudget}
+        className="mt-6 w-full rounded-xl border border-slate-300 bg-white px-6 py-4 font-semibold text-slate-900 transition hover:bg-slate-100"
+      >
+        Start New Budget Period
+      </button>
       {/* PLAN BREAKDOWN */}
+
+      {/* ARCHIVED BUDGETS */}
+      {archivedBudgets.length > 0 && (
+        <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
+          <h2 className="text-xl font-bold">
+            Previous Budget Periods
+          </h2>
+
+          <p className="mt-2 text-sm text-slate-500">
+            Your past budgets and recorded transactions are kept here.
+          </p>
+
+          <div className="mt-5 space-y-4">
+            {archivedBudgets.map((budget) => (
+              <div
+                key={budget.id}
+                className="rounded-xl border border-slate-200 p-4"
+              >
+                <p className="font-semibold">
+                  Budget from{" "}
+                  {new Date(budget.archivedAt).toLocaleDateString()}
+                </p>
+
+                <p className="mt-2 text-sm text-slate-600">
+                  Starting money: ₦
+                  {Number(budget.money || 0).toLocaleString()}
+                </p>
+
+                <p className="text-sm text-slate-600">
+                  Recorded spending: ₦
+                  {budget.transactions
+                    .reduce((total, transaction) => total + transaction.amount, 0)
+                    .toLocaleString()}
+                </p>
+
+                <p className="text-sm text-slate-600">
+                  Transactions: {budget.transactions.length}
+                </p>
+
+                {budget.transactions.length > 0 && (
+                  <div className="mt-3 border-t border-slate-100 pt-3">
+                    {budget.transactions.map((transaction) => (
+                      <div
+                        key={transaction.id}
+                        className="flex justify-between gap-4 py-1 text-sm"
+                      >
+                        <span>{transaction.category}</span>
+                        <span>
+                          ₦{transaction.amount.toLocaleString()}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       {/* RECORD SPENDING */}
     {transactions.length > 0 && (
   <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-6">
