@@ -1,8 +1,11 @@
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F7F6F0;
+  --foreground: #252D28;
+  --forest-green: #39745A;
+  --deep-green: #173F32;
 }
 
 @theme inline {
@@ -12,15 +15,90 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reusable hover effect for cards and sections */
+.section-hover {
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+@media (hover: hover) {
+  .section-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgb(23 63 50 / 10%);
+    border-color: var(--forest-green);
+  }
+}
+
+/* Consistent primary button styling */
+.button-primary {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease;
+}
+
+.button-primary:hover {
+  background-color: var(--forest-green);
+  border-color: var(--forest-green);
+}
+
+.button-primary:focus-visible {
+  outline: 2px solid var(--forest-green);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-hover,
+  .button-primary {
+    transition: none;
+  }
+
+  .section-hover:hover {
+    transform: none;
+  }
+}
+
+/* Automatically apply hover effects to existing cards */
+main div.rounded-2xl.border,
+main div.rounded-3xl.border,
+main section.rounded-2xl.border,
+main section.rounded-3xl.border {
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+@media (hover: hover) {
+  main div.rounded-2xl.border:hover,
+  main div.rounded-3xl.border:hover,
+  main section.rounded-2xl.border:hover,
+  main section.rounded-3xl.border:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgb(23 63 50 / 10%);
+    border-color: #39745A;
+  }
 }
