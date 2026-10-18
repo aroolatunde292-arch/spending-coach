@@ -16,12 +16,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://spending-coach-kappa.vercel.app"),
   title: "Spending Coach | Make Your Money Last Longer",
   description:
-    "Plan your budget, track your spending, and make your money last until your next income with Spending Coach.",
+    "Plan your budget, track your spending, and make your money last longer with Spending Coach.",
   applicationName: "Spending Coach",
   openGraph: {
     title: "Spending Coach | Make Your Money Last Longer",
     description:
-      "Plan your budget, track your spending, and make your money last until your next income.",
+      "Plan your budget, track your spending, and make your money last longer.",
     url: "https://spending-coach-kappa.vercel.app/",
     siteName: "Spending Coach",
     type: "website",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Spending Coach | Make Your Money Last Longer",
     description:
-      "Plan your budget, track your spending, and make your money last until your next income.",
+      "Plan your budget, track your spending, and make your money last longer.",
   },
 };
 
