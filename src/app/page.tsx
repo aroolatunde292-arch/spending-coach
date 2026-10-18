@@ -297,6 +297,9 @@ const [spendingCategory, setSpendingCategory] = useState("Food");
 const [spendingAmount, setSpendingAmount] = useState("");
 
 const [showRecordSpending, setShowRecordSpending] = useState(false);
+const [inlineEditId, setInlineEditId] = useState<number | null>(null);
+const [inlineEditCategory, setInlineEditCategory] = useState("Food");
+const [inlineEditAmount, setInlineEditAmount] = useState("");
 
   // Other expenses
 
@@ -1740,7 +1743,7 @@ const shortfall = Math.max(0, -safeToSpend);
 
                 >
 
-                  When is your next income?
+                  How long does this money need to last?
 
                 </label>
 
@@ -3770,13 +3773,11 @@ return (
 
           onClick={() => {
 
-            setSpendingAmount(transaction.amount.toString());
+            setInlineEditId(transaction.id);
 
-            setSpendingCategory(transaction.category);
+            setInlineEditAmount(transaction.amount.toString());
 
-            setEditingTransactionId(transaction.id);
-
-            setShowRecordSpending(true);
+            setInlineEditCategory(transaction.category);
 
           }}
 
@@ -3811,6 +3812,72 @@ return (
         </button>
 
       </div>
+      {inlineEditId === transaction.id && (
+        <div className="mt-4 space-y-3 rounded-xl bg-[#F7F9F6] p-4">
+          <p className="font-semibold text-[#173F32]">Edit spending</p>
+          <label className="block text-sm font-medium text-slate-700">
+            Category
+            <select
+              value={inlineEditCategory}
+              onChange={(event) => setInlineEditCategory(event.target.value)}
+              className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3"
+            >
+              {expenses.map((expense) => (
+                <option key={expense} value={expense}>{expense}</option>
+              ))}
+              {!expenses.includes(inlineEditCategory) && (
+                <option value={inlineEditCategory}>{inlineEditCategory}</option>
+              )}
+            </select>
+          </label>
+          <label className="block text-sm font-medium text-slate-700">
+            Amount spent
+            <div className="mt-2 flex items-center rounded-xl border border-slate-300 bg-white px-4">
+              <span>₦</span>
+              <input
+                type="number"
+                min="1"
+                value={inlineEditAmount}
+                onChange={(event) => setInlineEditAmount(event.target.value)}
+                className="w-full px-3 py-3 outline-none"
+              />
+            </div>
+          </label>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              disabled={!inlineEditAmount || Number(inlineEditAmount) <= 0}
+              onClick={() => {
+                const amount = Number(inlineEditAmount);
+                if (!Number.isFinite(amount) || amount <= 0) return;
+                setTransactions((current) =>
+                  current.map((item) =>
+                    item.id === transaction.id
+                      ? { ...item, category: inlineEditCategory, amount }
+                      : item
+                  )
+                );
+                setInlineEditId(null);
+                setInlineEditAmount("");
+              }}
+              className="flex-1 rounded-xl bg-[#173F32] px-4 py-3 font-semibold text-white disabled:opacity-40"
+            >
+              Save Changes
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setInlineEditId(null);
+                setInlineEditAmount("");
+              }}
+              className="rounded-xl border border-slate-300 bg-white px-4 py-3"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
 
     </div>
 
