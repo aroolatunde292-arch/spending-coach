@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://darling-figolla-840d43.netlify.app"),
+  metadataBase: new URL("https://spending-coach-yesxtra.netlify.app"),
   title: "Spending Coach | Make Your Money Last Longer",
   description:
     "Plan your budget, track your spending, and make your money last longer with Spending Coach.",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "Spending Coach | Make Your Money Last Longer",
     description:
       "Plan your budget, track your spending, and make your money last longer.",
-    url: "https://darling-figolla-840d43.netlify.app/",
+    url: "https://spending-coach-yesxtra.netlify.app/",
     siteName: "Spending Coach",
     type: "website",
     images: [
