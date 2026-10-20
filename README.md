@@ -1,83 +1,120 @@
 # Spending Coach
 
-**A personal budgeting application that helps users plan expenses, track spending, and understand how much money is safe to spend.**
+**Make Your Money Last Longer.**
 
-Spending Coach is a personal software development project built around a practical financial challenge: money can run out sooner than expected when spending decisions are made without a clear plan.
+Spending Coach is a personal budgeting web application designed to help people plan expenses, track everyday spending, and make more informed decisions about how they use their available money.
 
-The application helps users create a budget based on their available funds, expected expenses, and next income date. It also tracks actual spending against planned amounts and calculates an estimated safe-to-spend balance.
+The project addresses a practical financial challenge: money can run out earlier than expected when essential expenses, everyday purchases, and unexpected costs compete for the same funds.
+
+🔗 **Live Demo:** [spending-coach-yesxtra.netlify.app](https://spending-coach-yesxtra.netlify.app/)
+
+💻 **Source Code:** [View the repository on GitHub](https://github.com/aroolatunde292-arch/spending-coach)
 
 ## The Problem
 
-Traditional budgeting approaches can feel unrealistic when expenses happen in batches rather than evenly every day. Food shopping, transportation, mobile data, and unexpected costs can compete for the same limited funds.
+Budgeting can be difficult when expenses do not happen evenly throughout the week. Groceries may need to last several days, mobile data may be purchased in batches, and transportation costs can vary with each outing.
 
-Spending Coach takes a practical approach by allowing users to plan around their actual spending patterns and reserve money for unexpected expenses.
+Spending Coach is designed around these real-world spending patterns. It helps users plan for expected costs, monitor actual spending, and protect money needed for upcoming expenses.
 
 ## Features
 
-* **Four-step budget setup:** Enter available funds, the next income date, expense categories, and expected costs.
-* **Flexible expense planning:** Budget for groceries, prepared food, transport, mobile data, bills, health, education, family support, and entertainment.
-* **Spending tracker:** Record, edit, and delete spending transactions.
-* **Safe-to-spend calculation:** Estimate available discretionary money after accounting for recorded spending, remaining planned expenses, and a protected buffer.
-* **Category-level progress:** Compare planned spending, amounts paid, and remaining budgets.
-* **Protected emergency buffer:** Set aside funds for unexpected expenses.
+- **Guided budget setup:** Enter available funds, expected income timing, expense categories, and planned costs.
+- **Flexible expense planning:** Plan for food, transportation, mobile data, bills, family support, school, health, and entertainment.
+- **Spending tracker:** Record, edit, and delete spending transactions.
+- **Safe-to-spend estimate:** Calculate an estimated amount available after recorded spending, remaining planned expenses, and a protected financial buffer.
+- **Category-level progress:** Review spending against planned category amounts.
+- **Protected buffer:** Reserve money for unexpected expenses rather than treating every remaining naira as available to spend.
+- **Budget history:** Archive a budget period while retaining its associated planning information and transactions.
+- **Recently Deleted and recovery:** Move archived budgets to Recently Deleted and restore eligible budgets within the 30-day recovery period.
+- **Browser-based data storage:** Save and restore supported budget information using the browser's local storage.
+- **Progressive web app foundations:** Includes an app manifest, application icons, service-worker registration, and an offline fallback page.
 
 ## Technology Stack
 
-* Next.js
-* React
-* TypeScript
-* Tailwind CSS
+- **Framework:** Next.js
+- **UI library:** React
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Development tools:** Node.js, npm, Git, and GitHub
+- **Deployment:** Netlify
 
-## Getting Started
+## How the Safe-to-Spend Estimate Works
+
+Spending Coach estimates how much money is safe to spend by accounting for:
+
+1. Current funds remaining after recorded spending.
+2. Expenses that are still planned for the budget period.
+3. Money protected as a financial buffer.
+
+The goal is to help users distinguish between money they currently hold and money they can reasonably spend without compromising their existing plan.
+
+## Run Locally
 
 ### Prerequisites
 
-Install Node.js and npm.
+Install [Node.js](https://nodejs.org/) and npm.
 
 ### Installation
 
-1. Clone the repository:
+Clone the repository:
 
-   ```bash
-   git clone https://github.com/aroolatunde292-arch/spending-coach.git
-   ```
+```bash
+git clone https://github.com/aroolatunde292-arch/spending-coach.git
+```
 
-2. Navigate to the project directory:
+Navigate to the project directory:
 
-   ```bash
-   cd spending-coach
-   ```
+```bash
+cd spending-coach
+```
 
-3. Install the dependencies:
+Install dependencies:
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-4. Start the development server:
+Start the development server:
 
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
-5. Open http://localhost:3000 in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Current Status
+To create a production build, run:
 
-Spending Coach is an ongoing personal project. The current implementation includes budget setup, expense planning, transaction management, category-level progress, and safe-to-spend calculations.
+```bash
+npm run build
+```
 
-**Current limitation:** Budget data is managed in application state and is not yet saved to a persistent database. Saving budgets across page reloads and sessions is a potential future improvement.
+## Data Storage and Privacy
 
-## Future Improvements
+Budget information is stored locally in the user's browser using `localStorage`. Supported information can be restored when the application is reopened in the same browser.
 
-* Persist budgets and transactions between sessions.
-* Improve validation and test budget calculations across different scenarios.
-* Refine the user experience and responsive design.
-* Add more detailed financial summaries and insights.
-* Deploy a live demo for portfolio visitors.
+The current implementation does not provide cloud-based account synchronisation or a remote database. Browser data may be lost if the user clears the site's stored data, and it does not automatically transfer between devices or browsers.
 
-## Author
+Users should avoid relying on this implementation as their only record of important financial information.
 
-**Olatunde Aro**
+## Development Goals
 
-GitHub: [@aroolatunde292-arch](https://github.com/aroolatunde292-arch)
+Spending Coach is an ongoing personal software development project focused on practical financial planning and a clear user experience.
+
+Potential areas for future development include:
+
+- Automated tests for budget calculations and important user flows.
+- Stronger validation and recovery for saved data.
+- More detailed spending summaries and financial insights.
+- Further usability and accessibility improvements.
+- More robust offline behaviour and testing across devices.
+- Optional secure synchronisation across devices.
+
+## About the Developer
+
+**Olatunde Aro**  
+Aspiring Frontend Developer | AI-Assisted Development
+
+I am building practical, user-focused digital products while developing my skills in frontend technologies, application planning, and version control. Spending Coach is an opportunity to explore how budgeting calculations, interface design, and application state can work together to address a real-world problem.
+
+- **GitHub:** [@aroolatunde292-arch](https://github.com/aroolatunde292-arch)
+- **Live Project:** [Spending Coach](https://spending-coach-yesxtra.netlify.app/)
