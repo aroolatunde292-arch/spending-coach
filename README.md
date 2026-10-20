@@ -10,6 +10,42 @@ The project addresses a practical financial challenge: money can run out earlier
 
 💻 **Source Code:** [View the repository on GitHub](https://github.com/aroolatunde292-arch/spending-coach)
 
+## App Screenshots
+
+### Safe-to-Spend Dashboard
+See your available spending amount, money runway, and budget progress.
+
+![Spending Coach Safe-to-Spend Dashboard](public/01-safe-to-spend-dashboard.png)
+
+### Spending Tracker & Budget Breakdown
+Track spending, review recent transactions, and understand your remaining budget.
+
+![Spending Coach Spending Tracker and Budget Breakdown](public/02-spending-tracker-budget-breakdown.png)
+
+### Welcome / Budget Setup
+Set the amount of money available and how long it needs to last.
+
+![Spending Coach Budget Setup](public/03-Budget%20Setup.png)
+
+### Expense Categories
+Choose the categories you want to plan your money around.
+
+![Spending Coach Expense Categories](public/04-expense-categories.png)
+
+### Spending Plan Setup
+Plan everyday expenses such as food, transport, and mobile data.
+
+![Spending Coach Spending Plan Setup](public/05-spending-plan-setup.png)
+
+### New Budget Period Confirmation
+Review the option to start a fresh budget period.
+
+![Spending Coach New Budget Period Confirmation](public/06-new-budget-period-confirmation.png)
+
+### Budget History & Recovery
+Review previous budgets and recover recently deleted budget records.
+
+![Spending Coach Budget History and Recovery](public/07-budget-history-and-recovery.png)
 ## The Problem
 
 Budgeting can be difficult when expenses do not happen evenly throughout the week. Groceries may need to last several days, mobile data may be purchased in batches, and transportation costs can vary with each outing.
